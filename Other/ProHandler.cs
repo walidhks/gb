@@ -640,19 +640,49 @@ namespace GbService.Other
 			AstmHigh.LoadResults(result, instrument, null);
 		}
 
+        /*  public static void ParseUC1000(string m, Instrument instrument)
+          {
+              // ... (Keep the code inside exactly as it is) ...
+              string scode = m.Substring(1, 14);
+              JihazResult jihazResult = new JihazResult(scode);
+              string[] array = m.Substring(70).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+              for (int i = 0; i < 15; i++)
+              {
+                  // ...
+              }
+              AstmHigh.LoadResults(jihazResult, instrument, null);
+          }*/
+
+        // inside ProHandler class
         public static void ParseUC1000(string m, Instrument instrument)
         {
-            // ... (Keep the code inside exactly as it is) ...
-            string scode = m.Substring(1, 14);
-            JihazResult jihazResult = new JihazResult(scode);
-            string[] array = m.Substring(70).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var handler = new SysmexUC1000Handler();
 
-            for (int i = 0; i < 15; i++)
+            // Step 1: parse the raw message with our UC1000 handler
+            if (!handler.Parse(m, out var parsedResults) || parsedResults == null || parsedResults.Count == 0)
+                return;
+
+            // Step 2: group by SampleCode (usually only one sample per frame)
+            foreach (var grp in parsedResults.GroupBy(r => r.SampleCode))
             {
-                // ...
+                var jihazResult = new JihazResult(grp.Key);
+
+                // Step 3: convert each AnalysisResult into LowResult
+                foreach (var r in grp)
+                {
+                    jihazResult.Results.Add(new LowResult(
+                        r.AnalysisCode,  // e.g. "URO"
+                        r.Value,         // e.g. "1+" or "100"
+                        null, null, null
+                    ));
+                }
+
+                // Step 4: send to the common result loader
+                AstmHigh.LoadResults(jihazResult, instrument, null);
             }
-            AstmHigh.LoadResults(jihazResult, instrument, null);
         }
+
         public static void ParsePrecision(string m, Instrument instrument)
 		{
 			List<string> list = m.Split(new char[]
