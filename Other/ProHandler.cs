@@ -86,7 +86,14 @@ namespace GbService.Other
 													ProHandler.ParseRoller(m, this._instrument);
 												}
 												else
-												{
+                                                { // NEW: independent UC‑1000 handling
+                                                    bool flagUC = kind == Jihas.SysmexUC1000;
+                                                if (flagUC)
+                                                {
+                                                    ProHandler.ParseUC1000(m, this._instrument);
+                                                }
+                                                else
+                                                {
 													bool flag10 = kind == Jihas.Esr;
 													if (flag10)
 													{
@@ -146,8 +153,10 @@ namespace GbService.Other
 						}
 					}
 				}
-			}
-			catch (Exception ex)
+                }
+            }
+
+            catch (Exception ex)
 			{
 				ProHandler._logger.Error(new LogMessageGenerator(ex.ToString));
 			}

@@ -114,16 +114,14 @@ namespace GbService.Communication.Serial
 				int bytesToRead = this._comPort.BytesToRead;
 				byte[] array = new byte[bytesToRead];
 				this._comPort.Read(array, 0, bytesToRead);
-				string @string = Encoding.ASCII.GetString(array);
-				this._msg += @string;
+                string @string = Encoding.ASCII.GetString(array);
+                this._msg += @string;
 
-                // [INSERT THIS BLOCK]--------------------------------------------------
-                // Fix for Sysmex UC-1000 (Kind 50): Send ACK (0x06) immediately on ETX
-                if (this._kind == Jihas.SysmexUC1000 && @string.IndexOf('\x03') >= 0)
+                // [FIX] Send ACK immediately when ETX is detected for Sysmex UC-1000
+                if (this._kind == Jihas.SysmexUC1000 && @string.IndexOf('\u0003') >= 0)
                 {
                     this._comPort.Write(new byte[] { 0x06 }, 0, 1);
                 }
-                // -------------------------------------------------------------
                 bool logLow = this._logLow;
 				if (logLow)
 				{
@@ -266,7 +264,9 @@ namespace GbService.Communication.Serial
 								break;
 							case Jihas.Ge300:
 								return (m.StartsWith('\u0002'.ToString()) && m.EndsWith("\u0003" + Tu.NL)) ? SerialManager.MsgState.Ok : SerialManager.MsgState.None;
-                                case (Jihas)74: // <--- ADD THIS (Sysmex UC-1000)
+
+								case Jihas.SysmexUC1000: // <--- ADD THIS (Sysmex UC-1000)
+                               
                                 case Jihas.Roller:
 								return (m.StartsWith('\u0002'.ToString()) && m.EndsWith('\u0003'.ToString())) ? SerialManager.MsgState.Ok : SerialManager.MsgState.None;
 							case Jihas.OrthoVision:

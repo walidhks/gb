@@ -22,7 +22,7 @@ namespace GbService
 {
 	public class Gb
 	{
-		////xxxxxxyyyyaaaaaaaa
+		////xxxxxxyyyyaaaaaaaa33333
 		// [FIX 1] Add these missing fields if they aren't there
     // 'g' is the logger for the password file
     private readonly NLog.Logger g = LogManager.GetLogger("Pass");
@@ -790,10 +790,8 @@ namespace GbService
 								}
 								goto IL_28E;
 							}
-                        //case Jihas.SysmexUC1000:
-                            // Create Serial Manager with the new handler
-                           // SysmexUC1000Handler.Parse(text, this._instrument);
-                        case Jihas.SfriH18:
+
+						case Jihas.SfriH18:
                             break;
                         case Jihas.HumaCount60:
                             HumaCount5Handler.Parse60(text, this._instrument);
@@ -923,7 +921,7 @@ namespace GbService
 			Jihas.Biolis24i,
 			Jihas.TosohG7,
 			Jihas.SysmexKx21N,
-			Jihas.SysmexUC1000
+			
 		};
 
 		private static Logger _info = LogManager.GetLogger("Info");
