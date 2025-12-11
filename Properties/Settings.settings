@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile CurrentProfile="(Default)" GeneratedClassNamespace="GbService.Properties" GeneratedClassName="Settings" xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CypherPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">frzekfksd~~#{uhgvge``\rfd67481+56r']@\rfçè-t-'éèça)àoiçàaezdc</Value>
+    </Setting>
+    <Setting Name="RsaPublicKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{"Exponent":"AQAB","Modulus":"sHIPKf6689Iok1J8k3VLUwdnmUeo23QefdGRorCUCaZ+UKwQWPIGM2N+CWmwdO2yIv4dwAPOz7sibPXC/coTzwLjY1IH0MVzpkdbUgmzZXWJH5h6dVEmin9OSI0dJmEruVhNaMOt0IGkrJ8sMDS8EY7/n+mpOr+6eb8RXrppWuRHIqvnAgJE9BaYzLLESSo3n58rXTdlMrt2Wd1WCw41zWsQBPswnJNY5bCezm1GHyDW9/kmgDdZDV4vfCwqr+KJ53djEcWmLkcrP2hsXomvuvyY98JjcCm+3ZsfxFHzqMlbqYPDKozqEdlGdvZKlJCNPLzq+2N4ORK/w1RGBSPXZQ==","P":null,"Q":null,"DP":null,"DQ":null,"InverseQ":null,"D":null}</Value>
+    </Setting>
+    <Setting Name="ID" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">5028</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

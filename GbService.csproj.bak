@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{057AE7A6-6560-4B32-929B-C34933299CAA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>GbService</RootNamespace>
+    <AssemblyName>GbService</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <StartupObject>GbService.Program</StartupObject>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Mvvm.v18.1">
+      <HintPath>..\..\BA200 hgpo solved\DevExpress.Mvvm.v18.1.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\BA200 hgpo solved\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\BA200 hgpo solved\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Base">
+      <HintPath>..\..\BA200 hgpo solved\NHapi.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V23">
+      <HintPath>..\..\BA200 hgpo solved\NHapi.Model.V23.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V231">
+      <HintPath>..\..\BA200 hgpo solved\NHapi.Model.V231.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V24">
+      <HintPath>..\..\BA200 hgpo solved\NHapi.Model.V24.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V25">
+      <HintPath>..\..\BA200 hgpo solved\NHapi.Model.V25.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\BA200 hgpo solved\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ASTM\AstmHigh.cs" />
+    <Compile Include="ASTM\AstmHigh1.cs" />
+    <Compile Include="ASTM\AstmHigh2.cs" />
+    <Compile Include="ASTM\AstmManager.cs" />
+    <Compile Include="ASTM\AstmManagerV2.cs" />
+    <Compile Include="ASTM\AstmOrder.cs" />
+    <Compile Include="ASTM\AstmProp.cs" />
+    <Compile Include="ASTM\AstmResult.cs" />
+    <Compile Include="ASTM\ASTM_Comment.cs" />
+    <Compile Include="ASTM\ASTM_Manufacturer.cs" />
+    <Compile Include="ASTM\ASTM_Message.cs" />
+    <Compile Include="ASTM\ASTM_Patient.cs" />
+    <Compile Include="ASTM\ASTM_Record.cs" />
+    <Compile Include="ASTM\ASTM_Request.cs" />
+    <Compile Include="ASTM\ASTM_Scientific.cs" />
+    <Compile Include="ASTM\AU480Manager.cs" />
+    <Compile Include="ASTM\BeckmanCX9Manager.cs" />
+    <Compile Include="ASTM\FileHigh.cs" />
+    <Compile Include="ASTM\FrameKind.cs" />
+    <Compile Include="ASTM\Kenza240Manager.cs" />
+    <Compile Include="ASTM\KermitManager.cs" />
+    <Compile Include="ASTM\LH780Manager.cs" />
+    <Compile Include="ASTM\Parser.cs" />
+    <Compile Include="ASTM\Sid.cs" />
+    <Compile Include="ASTM\TargaManager.cs" />
+    <Compile Include="ASTM\VidasManager.cs" />
+    <Compile Include="BasicService.cs" />
+    <Compile Include="BasicServiceInstaller.cs" />
+    <Compile Include="BasicServiceStarter.cs" />
+    <Compile Include="Common\Cipher\CustomResolver.cs" />
+    <Compile Include="Common\Cipher\EncryptLayoutRendererWrapper.cs" />
+    <Compile Include="Common\Cipher\RsaEncrypt.cs" />
+    <Compile Include="Common\Cipher\RSAParametersProj.cs" />
+    <Compile Include="Common\Cipher\StringCipher.cs" />
+    <Compile Include="Common\GbTest.cs" />
+    <Compile Include="Common\Helper.cs" />
+    <Compile Include="Common\LogHelper.cs" />
+    <Compile Include="Common\NetResource.cs" />
+    <Compile Include="Common\NetworkConnection.cs" />
+    <Compile Include="Common\ResourceDisplaytype.cs" />
+    <Compile Include="Common\ResourceScope.cs" />
+    <Compile Include="Common\ResourceType.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
+    <Compile Include="Common\Usr.cs" />
+    <Compile Include="Communication\Coding.cs" />
+    <Compile Include="Communication\Common\Aes.cs" />
+    <Compile Include="Communication\Common\Crc.cs" />
+    <Compile Include="Communication\Common\Ct.cs" />
+    <Compile Include="Communication\Common\Frame.cs" />
+    <Compile Include="Communication\Common\ILowManager.cs" />
+    <Compile Include="Communication\Common\LowState.cs" />
+    <Compile Include="Communication\Common\Tu.cs" />
+    <Compile Include="Communication\GraphMap.cs" />
+    <Compile Include="Communication\HttpServer.cs" />
+    <Compile Include="Communication\Inf.cs" />
+    <Compile Include="Communication\Jihas.cs" />
+    <Compile Include="Communication\JihasUtil.cs" />
+    <Compile Include="Communication\JihazResult.cs" />
+    <Compile Include="Communication\LowResult.cs" />
+    <Compile Include="Communication\Mapping.cs" />
+    <Compile Include="Communication\Serial\MessageReceivedEventArgs.cs" />
+    <Compile Include="Communication\Serial\SerialManager.cs" />
+    <Compile Include="Communication\TCP\StateObject.cs" />
+    <Compile Include="Communication\TCP\TcpClient.cs" />
+    <Compile Include="Communication\TCP\TcpManager.cs" />
+    <Compile Include="Communication\TextUtil.cs" />
+    <Compile Include="Gb.cs" />
+    <Compile Include="GbService.cs" />
+    <Compile Include="HL7\Hl7Manager.cs" />
+    <Compile Include="HL7\HL7MessageHelper.cs" />
+    <Compile Include="HL7\HL7VersionFactory.cs" />
+    <Compile Include="HL7\IAckMessage.cs" />
+    <Compile Include="HL7\IParser.cs" />
+    <Compile Include="HL7\MessageHandler.cs" />
+    <Compile Include="HL7\NHapiExtensions.cs" />
+    <Compile Include="HL7\Util.cs" />
+    <Compile Include="HL7\V231\A01.cs" />
+    <Compile Include="HL7\V231\Ack.cs" />
+    <Compile Include="HL7\V231\DSR.cs" />
+    <Compile Include="HL7\V231\DsrQ03Handler.cs" />
+    <Compile Include="HL7\V231\OruR01Handler.cs" />
+    <Compile Include="HL7\V231\QryQ02Handler.cs" />
+    <Compile Include="HL7\V23\A01_v23.cs" />
+    <Compile Include="HL7\V23\Ack_v23.cs" />
+    <Compile Include="HL7\V23\OruR01Handler_v23.cs" />
+    <Compile Include="HL7\V24\Ack_v24.cs" />
+    <Compile Include="HL7\V24\OruR01Handler_v24.cs" />
+    <Compile Include="HL7\V25\Ack_v25.cs" />
+    <Compile Include="HL7\V25\OruR01Handler_v25.cs" />
+    <Compile Include="IService.cs" />
+    <Compile Include="Microsoft\CodeAnalysis\EmbeddedAttribute.cs" />
+    <Compile Include="Model\Common\AuditBase.cs" />
+    <Compile Include="Model\Common\BaseContext.cs" />
+    <Compile Include="Model\Common\EntityBase.cs" />
+    <Compile Include="Model\Contexts\LaboContext.cs" />
+    <Compile Include="Model\Domain\AgeAstm.cs" />
+    <Compile Include="Model\Domain\AgeEnum.cs" />
+    <Compile Include="Model\Domain\AgeGroup.cs" />
+    <Compile Include="Model\Domain\Analysis.cs" />
+    <Compile Include="Model\Domain\AnalysisCategory.cs" />
+    <Compile Include="Model\Domain\AnalysisMethod.cs" />
+    <Compile Include="Model\Domain\AnalysisRequest.cs" />
+    <Compile Include="Model\Domain\AnalysisRequestState.cs" />
+    <Compile Include="Model\Domain\AnalysisState.cs" />
+    <Compile Include="Model\Domain\AnalysisType.cs" />
+    <Compile Include="Model\Domain\AnalysisTypeInstrumentMapping.cs" />
+    <Compile Include="Model\Domain\AnalysisTypeState.cs" />
+    <Compile Include="Model\Domain\AnalysisTypeUsageType.cs" />
+    <Compile Include="Model\Domain\Instrument.cs" />
+    <Compile Include="Model\Domain\InstrumentKind.cs" />
+    <Compile Include="Model\Domain\LabMessage.cs" />
+    <Compile Include="Model\Domain\LabMessageState.cs" />
+    <Compile Include="Model\Domain\PanelRelationship.cs" />
+    <Compile Include="Model\Domain\ParamDict.cs" />
+    <Compile Include="Model\Domain\ParamDictHelper.cs" />
+    <Compile Include="Model\Domain\ParamDictName.cs" />
+    <Compile Include="Model\Domain\Patient.cs" />
+    <Compile Include="Model\Domain\Sample.cs" />
+    <Compile Include="Model\Domain\SampleSource.cs" />
+    <Compile Include="Model\Domain\SexeEnum.cs" />
+    <Compile Include="Model\Domain\TubeType.cs" />
+    <Compile Include="Model\Migrations\Configuration.cs" />
+    <Compile Include="Model\ModelConfigurations\AnalysisConfiguration.cs" />
+    <Compile Include="Model\ModelConfigurations\AnalysisRequestConfiguration.cs" />
+    <Compile Include="Model\ModelConfigurations\AnalysisTypeConfiguration.cs" />
+    <Compile Include="Model\ModelConfigurations\SampleConfiguration.cs" />
+    <Compile Include="Other\AbxMessageHandler.cs" />
+    <Compile Include="Other\Advia2120MessageHandler.cs" />
+    <Compile Include="Other\Advia2120State.cs" />
+    <Compile Include="Other\Advia560Handler.cs" />
+    <Compile Include="Other\AU480MessageHandler.cs" />
+    <Compile Include="Other\BeckmanCX9Handler.cs" />
+    <Compile Include="Other\CelltakHandler.cs" />
+    <Compile Include="Other\Cobas400PlusMessageHandler.cs" />
+    <Compile Include="Other\CyanStripMiniMessageHandler.cs" />
+    <Compile Include="Other\DiagonDCell60MessageHandler.cs" />
+    <Compile Include="Other\HumaCount5Handler.cs" />
+    <Compile Include="Other\IrisIQ200MessageHandler.cs" />
+    <Compile Include="Other\Kenza240Handler.cs" />
+    <Compile Include="Other\KermitHigh.cs" />
+    <Compile Include="Other\LH780MessageHandler.cs" />
+    <Compile Include="Other\MiniCapHandler.cs" />
+    <Compile Include="Other\MiniVidasMessageHandler.cs" />
+    <Compile Include="Other\MyticMessageHandler.cs" />
+    <Compile Include="Other\ProHandler.cs" />
+    <Compile Include="Other\Result.cs" />
+    <Compile Include="Other\SelectraeHandler.cs" />
+    <Compile Include="Other\SysmexKX21NMessageHandler.cs" />
+    <Compile Include="Other\TargaHandler.cs" />
+    <Compile Include="Other\VidasHandler.cs" />
+    <Compile Include="Other\VisionHandler.cs" />
+    <Compile Include="Other\VitekAf.cs" />
+    <Compile Include="Other\VitekRa.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="System\Runtime\CompilerServices\NullableAttribute.cs" />
+    <Compile Include="System\Runtime\CompilerServices\NullableContextAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{79AB018C-3B08-4F1F-A3D4-7E5411850260}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>GbService</RootNamespace>
+    <AssemblyName>GbService</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <StartupObject>GbService.Program</StartupObject>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper, Version=33.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.33.1.0\lib\net48\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Enums.NET, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enums.NET.5.0.0\lib\net461\Enums.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="ExtendedNumerics.BigDecimal, Version=2025.1001.2.129, Culture=neutral, PublicKeyToken=65f1315a45ad8949, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExtendedNumerics.BigDecimal.2025.1001.2.129\lib\net48\ExtendedNumerics.BigDecimal.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Signed.5.0.0\lib\net48\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.1\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Base, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.base.3.2.3\lib\net35\NHapi.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V21, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v21.3.2.3\lib\net35\NHapi.Model.V21.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V22, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v22.3.2.3\lib\net35\NHapi.Model.V22.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V23, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v23.3.2.3\lib\net35\NHapi.Model.V23.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V231, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v231.3.2.3\lib\net35\NHapi.Model.V231.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V24, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v24.3.2.3\lib\net35\NHapi.Model.V24.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V25, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v25.3.2.3\lib\net35\NHapi.Model.V25.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V251, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v251.3.2.3\lib\net35\NHapi.Model.V251.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V26, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v26.3.2.3\lib\net35\NHapi.Model.V26.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V27, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v27.3.2.3\lib\net35\NHapi.Model.V27.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V271, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v271.3.2.3\lib\net35\NHapi.Model.V271.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V28, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v28.3.2.3\lib\net35\NHapi.Model.V28.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V281, Version=3.2.3.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.model.v281.3.2.3\lib\net35\NHapi.Model.V281.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>packages\NLog.4.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.Core, Version=2.7.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.5\lib\net472\NPOI.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.7.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.5\lib\net472\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.7.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.5\lib\net472\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.7.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.5\lib\net472\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="NSax, Version=1.0.2.0, Culture=neutral, PublicKeyToken=0b3d9671cbd3c8d0, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSax.1.0.2\lib\net472\NSax.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.Fonts.1.0.1\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.ImageSharp.2.1.11\lib\net472\SixLabors.ImageSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Xml, Version=8.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.8.0.2\lib\net462\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Text.Encoding.CodePages, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.5.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="ZString, Version=2.6.0.0, Culture=neutral, PublicKeyToken=df4c250b14d82627, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZString.2.6.0\lib\netstandard2.0\ZString.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ASTM\AstmHigh.cs" />
+    <Compile Include="ASTM\AstmHigh1.cs" />
+    <Compile Include="ASTM\AstmHigh2.cs" />
+    <Compile Include="ASTM\AstmManager.cs" />
+    <Compile Include="ASTM\AstmManagerV2.cs" />
+    <Compile Include="ASTM\AstmOrder.cs" />
+    <Compile Include="ASTM\AstmProp.cs" />
+    <Compile Include="ASTM\AstmResult.cs" />
+    <Compile Include="ASTM\ASTM_Comment.cs" />
+    <Compile Include="ASTM\ASTM_Manufacturer.cs" />
+    <Compile Include="ASTM\ASTM_Message.cs" />
+    <Compile Include="ASTM\ASTM_Patient.cs" />
+    <Compile Include="ASTM\ASTM_Record.cs" />
+    <Compile Include="ASTM\ASTM_Request.cs" />
+    <Compile Include="ASTM\ASTM_Scientific.cs" />
+    <Compile Include="ASTM\AU480Manager.cs" />
+    <Compile Include="ASTM\BeckmanCX9Manager.cs" />
+    <Compile Include="ASTM\FileHigh.cs" />
+    <Compile Include="ASTM\FrameKind.cs" />
+    <Compile Include="ASTM\Kenza240Manager.cs" />
+    <Compile Include="ASTM\KermitManager.cs" />
+    <Compile Include="ASTM\LH780Manager.cs" />
+    <Compile Include="ASTM\Parser.cs" />
+    <Compile Include="ASTM\Sid.cs" />
+    <Compile Include="ASTM\TargaManager.cs" />
+    <Compile Include="ASTM\VidasManager.cs" />
+    <Compile Include="BasicService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BasicServiceInstaller.cs" />
+    <Compile Include="BasicServiceStarter.cs" />
+    <Compile Include="Common\Cipher\Cipher.cs" />
+    <Compile Include="Common\Cipher\CustomResolver.cs" />
+    <Compile Include="Common\Cipher\EncryptLayoutRendererWrapper.cs" />
+    <Compile Include="Common\Cipher\RsaEncrypt.cs" />
+    <Compile Include="Common\Cipher\RSAParametersProj.cs" />
+    <Compile Include="Common\Cipher\FastCipher.cs" />
+    <Compile Include="Common\Cipher\StringCipher.cs" />
+    <Compile Include="Common\GbTest.cs" />
+    <Compile Include="Common\Helper.cs" />
+    <Compile Include="Common\LogHelper - Copy.cs" />
+    <Compile Include="Common\LogHelper.cs" />
+    <Compile Include="Common\NetResource.cs" />
+    <Compile Include="Common\NetworkConnection.cs" />
+    <Compile Include="Common\ResourceDisplaytype.cs" />
+    <Compile Include="Common\ResourceScope.cs" />
+    <Compile Include="Common\ResourceType.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
+    <Compile Include="Common\Usr.cs" />
+    <Compile Include="Communication\Coding.cs" />
+    <Compile Include="Communication\Common\Aes.cs" />
+    <Compile Include="Communication\Common\Crc.cs" />
+    <Compile Include="Communication\Common\Ct.cs" />
+    <Compile Include="Communication\Common\Frame.cs" />
+    <Compile Include="Communication\Common\ILowManager.cs" />
+    <Compile Include="Communication\Common\LowState.cs" />
+    <Compile Include="Communication\Common\Record.cs" />
+    <Compile Include="Communication\Common\Tu.cs" />
+    <Compile Include="Communication\GraphMap.cs" />
+    <Compile Include="Communication\HttpServer.cs" />
+    <Compile Include="Communication\Inf.cs" />
+    <Compile Include="Communication\Jihas.cs" />
+    <Compile Include="Communication\JihasUtil.cs" />
+    <Compile Include="Communication\JihazResult.cs" />
+    <Compile Include="Communication\LowResult.cs" />
+    <Compile Include="Communication\Mapping.cs" />
+    <Compile Include="Communication\Serial\MessageReceivedEventArgs.cs" />
+    <Compile Include="Communication\Serial\SerialManager.cs" />
+    <Compile Include="Communication\TCP\StateObject.cs" />
+    <Compile Include="Communication\TCP\TcpClient.cs" />
+    <Compile Include="Communication\TCP\TcpManager.cs" />
+    <Compile Include="Communication\TextUtil.cs" />
+    <Compile Include="Gb.cs" />
+    <Compile Include="GbService.cs" />
+    <Compile Include="HL7\Hl7Manager.cs" />
+    <Compile Include="HL7\HL7MessageHelper.cs" />
+    <Compile Include="HL7\HL7VersionFactory.cs" />
+    <Compile Include="HL7\IAckMessage.cs" />
+    <Compile Include="HL7\IParser.cs" />
+    <Compile Include="HL7\MessageHandler.cs" />
+    <Compile Include="HL7\NHapiExtensions.cs" />
+    <Compile Include="HL7\Talab.cs" />
+    <Compile Include="HL7\Util.cs" />
+    <Compile Include="HL7\Util2.cs" />
+    <Compile Include="HL7\V231\A01.cs" />
+    <Compile Include="HL7\V231\Ack.cs" />
+    <Compile Include="HL7\V231\DSR.cs" />
+    <Compile Include="HL7\V231\DsrQ03Handler.cs" />
+    <Compile Include="HL7\V231\OruR01Handler.cs" />
+    <Compile Include="HL7\V231\QryQ02Handler.cs" />
+    <Compile Include="HL7\V23\A01_v23.cs" />
+    <Compile Include="HL7\V23\Ack_v23.cs" />
+    <Compile Include="HL7\V23\OruR01Handler_v23.cs" />
+    <Compile Include="HL7\V24\Ack_v24.cs" />
+    <Compile Include="HL7\V24\OruR01Handler_v24.cs" />
+    <Compile Include="HL7\V25\Ack_v25.cs" />
+    <Compile Include="HL7\V25\OruR01Handler_v25.cs" />
+    <Compile Include="IService.cs" />
+    <Compile Include="Microsoft\CodeAnalysis\EmbeddedAttribute.cs" />
+    <Compile Include="Model\Common\AuditBase.cs" />
+    <Compile Include="Model\Common\BaseContext.cs" />
+    <Compile Include="Model\Common\EntityBase.cs" />
+    <Compile Include="Model\Contexts\LaboContext.cs" />
+    <Compile Include="Model\Domain\Partner.cs" />
+    <Compile Include="Model\Domain\AgeAstm.cs" />
+    <Compile Include="Model\Domain\AgeEnum.cs" />
+    <Compile Include="Model\Domain\AgeGroup.cs" />
+    <Compile Include="Model\Domain\Analysis.cs" />
+    <Compile Include="Model\Domain\AnalysisRequest.cs" />
+    <Compile Include="Model\Domain\AnalysisRequestState.cs" />
+    <Compile Include="Model\Domain\AnalysisState.cs" />
+    <Compile Include="Model\Domain\AnalysisType.cs" />
+    <Compile Include="Model\Domain\AnalysisTypeInstrumentMapping.cs" />
+    <Compile Include="Model\Domain\AnalysisTypeState.cs" />
+    <Compile Include="Model\Domain\AnalysisTypeUsageType.cs" />
+    <Compile Include="Model\Domain\Instrument.cs" />
+    <Compile Include="Model\Domain\LabMessage.cs" />
+    <Compile Include="Model\Domain\LabMessageState.cs" />
+    <Compile Include="Model\Domain\PanelRelationship.cs" />
+    <Compile Include="Model\Domain\ParamDict.cs" />
+    <Compile Include="Model\Domain\ParamDictHelper.cs" />
+    <Compile Include="Model\Domain\ParamDictName.cs" />
+    <Compile Include="Model\Domain\Patient.cs" />
+    <Compile Include="Model\Domain\Sample.cs" />
+    <Compile Include="Model\Domain\SampleSource.cs" />
+    <Compile Include="Model\Domain\SexeEnum.cs" />
+    <Compile Include="Model\Domain\TubeType.cs" />
+    <Compile Include="Model\Migrations\Configuration.cs" />
+    <Compile Include="Model\ModelConfigurations\AnalysisConfiguration.cs" />
+    <Compile Include="Model\ModelConfigurations\AnalysisRequestConfiguration.cs" />
+    <Compile Include="Model\ModelConfigurations\AnalysisTypeConfiguration.cs" />
+    <Compile Include="Model\ModelConfigurations\SampleConfiguration.cs" />
+    <Compile Include="Other\SysmexUC1000Handler.cs" />
+    <Compile Include="Other\Lifotronichandler.cs" />
+    <Compile Include="Other\AbxMessageHandler.cs" />
+    <Compile Include="Other\Advia2120MessageHandler.cs" />
+    <Compile Include="Other\Advia2120State.cs" />
+    <Compile Include="Other\Advia560Handler.cs" />
+    <Compile Include="Other\AU480MessageHandler.cs" />
+    <Compile Include="Other\BeckmanCX9Handler.cs" />
+    <Compile Include="Other\CelltakHandler.cs" />
+    <Compile Include="Other\Cobas400PlusMessageHandler.cs" />
+    <Compile Include="Other\CyanStripMiniMessageHandler.cs" />
+    <Compile Include="Other\DiagonDCell60MessageHandler.cs" />
+    <Compile Include="Other\HLAExcelParser.cs" />
+    <Compile Include="Other\HumaCount5Handler.cs" />
+    <Compile Include="Other\IrisIQ200MessageHandler.cs" />
+    <Compile Include="Other\Kenza240Handler.cs" />
+    <Compile Include="Other\KermitHigh.cs" />
+    <Compile Include="Other\LH780MessageHandler.cs" />
+    <Compile Include="Other\MiniCapHandler.cs" />
+    <Compile Include="Other\MiniVidasMessageHandler.cs" />
+    <Compile Include="Other\MyticMessageHandler.cs" />
+    <Compile Include="Other\ProHandler.cs" />
+    <Compile Include="Other\Result.cs" />
+    <Compile Include="Other\SelectraeHandler.cs" />
+    <Compile Include="Other\SysmexKX21NMessageHandler.cs" />
+    <Compile Include="Other\TargaHandler.cs" />
+    <Compile Include="Other\VidasHandler.cs" />
+    <Compile Include="Other\VisionHandler.cs" />
+    <Compile Include="Other\VitekAf.cs" />
+    <Compile Include="Other\VitekRa.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="System\Runtime\CompilerServices\NullableAttribute.cs" />
+    <Compile Include="System\Runtime\CompilerServices\NullableContextAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+</Project>

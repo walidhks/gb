@@ -1,0 +1,5 @@
+AUTOBIO 1800 BID
+INDIKO + BID
+URITUS1000 UNI
+Lifotronic h9 with variants
+sysmexuf4000 // it was working with access and mode = 2
