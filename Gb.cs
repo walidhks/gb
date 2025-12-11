@@ -22,7 +22,7 @@ namespace GbService
 {
 	public class Gb
 	{
-		////xxxxxx
+		////xxxxxxyyyy
 		// [FIX 1] Add these missing fields if they aren't there
     // 'g' is the logger for the password file
     private readonly NLog.Logger g = LogManager.GetLogger("Pass");
