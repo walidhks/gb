@@ -1,224 +1,5 @@
-﻿/*using System;
-using System.Collections.Generic;
-using GbService.ASTM;
-using GbService.Communication;
-using GbService.Model.Domain;
-using NLog;
-
-namespace GbService.Other
-{
-    public class LifotronicHandler
-    {
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
-
-        public static void Parse(string msg, Instrument instrument)
-        {
-            try
-            {
-                // 1. Clean Framing (STX 0x02, ETX 0x03)
-                string cleanMsg = msg.Replace("\u0002", "").Replace("\u0003", "").Trim();
-                // _logger.Info("H9 Raw: " + cleanMsg);
-
-                 // Validate Start (S = Sample) [cite: 1821]
-                if (string.IsNullOrEmpty(cleanMsg) || cleanMsg[0] != 'S') return;
-
-                int cursor = 1; // Skip 'S'
-
-                 // Skip: Version(2) + NumParams(2) + Format(2) = 6 chars [cite: 1821]
-                cursor += 6;
-
-                 // --- 2. Get Sample ID Length (2 chars) --- [cite: 1821]
-                string lenStr = cleanMsg.Substring(cursor, 2);
-                int idLen = 0;
-                int.TryParse(lenStr, out idLen);
-                cursor += 2;
-
-                // [FIX] Force 12 characters if parsing fails or is zero, as per your request
-                if (idLen == 0) idLen = 12;
-
-                 // --- 3. Get Sample ID --- [cite: 1821]
-                string sampleId = cleanMsg.Substring(cursor, idLen).Trim();
-                cursor += idLen;
-
-                _logger.Info("H9 Parsed ID: " + sampleId); // CORRECT
-                JihazResult result = new JihazResult(sampleId);
-
-                 // --- 4. Skip Demographics --- [cite: 1821]
-                // RackNo(4) + Pos(2) + RunningNo(4) + BloodType(1) = 11
-                // Date: Year(2)+Month(2)+Day(2)+Hour(2)+Min(2)+Sec(2) = 12
-                // Total Skip = 23 chars
-                cursor += 23;
-
-                // Define Variants in Order (Manual C.3 Page 82-83)
-                string[] variants = { "HbA1a", "HbA1b", "HbF", "LA1c", "HbA1c", "HbA0" };
-
-                // --- 5. Parse Appearance Times (6 fields * 2 chars) --- [cite: 1821]
-                // Manual says ## (2 chars) for each
-                foreach (string v in variants)
-                {
-                    string val = cleanMsg.Substring(cursor, 2);
-                    result.Results.Add(new LowResult(v + "_Time", val, "s", null, null));
-                    cursor += 2;
-                }
-
-                // --- 6. Parse Absorbance (6 fields * 6 chars) --- [cite: 1821]
-                // Manual says #.#### (6 chars)
-                foreach (string v in variants)
-                {
-                    string val = cleanMsg.Substring(cursor, 6);
-                    result.Results.Add(new LowResult(v + "_Abs", val.Trim(), "Abs", null, null));
-                    cursor += 6;
-                }
-
-                // --- 7. Parse Peak Area (6 fields * 7 chars) --- [cite: 1821]
-                // Manual says ###.### (7 chars)
-                foreach (string v in variants)
-                {
-                    string val = cleanMsg.Substring(cursor, 7);
-                    result.Results.Add(new LowResult(v + "_Area", val.Trim(), null, null, null));
-                    cursor += 7;
-                }
-
-                // --- 8. Parse Peak Area Ratio (6 fields * 5 chars) --- [cite: 1821]
-                // Manual says ##.## (5 chars)
-                foreach (string v in variants)
-                {
-                    string val = cleanMsg.Substring(cursor, 5);
-                    result.Results.Add(new LowResult(v + "_Ratio", val.Trim(), "%", null, null));
-                    cursor += 5;
-                }
-
-                // --- 9. Main Results --- [cite: 1828]
-                // HbA1c IFCC (###.# = 5 chars)
-                string ifcc = cleanMsg.Substring(cursor, 5);
-                result.Results.Add(new LowResult("HbA1c_IFCC", ifcc.Trim(), "mmol/mol", null, null));
-                cursor += 5;
-
-                // Average Glucose mmol/L (##.# = 4 chars) - Manual Page 83
-                string gluMmol = cleanMsg.Substring(cursor, 4);
-                result.Results.Add(new LowResult("eAG_mmol", gluMmol.Trim(), "mmol/L", null, null));
-                cursor += 4;
-
-                // Average Glucose mg/dl (#### = 4 chars) - Manual Page 83
-                string gluMg = cleanMsg.Substring(cursor, 4);
-                result.Results.Add(new LowResult("eAG", gluMg.Trim(), "mg/dL", null, null));
-                cursor += 4;
-
-                // NOTE: The main HbA1c NGSP % is often derived from the HbA1c Ratio parsed in Step 8.
-                // If there is a specific NGSP field not listed or in a different spot on your firmware version,
-                // you can map "HbA1c_Ratio" to your HbA1c test in the database.
-                // Or check if one of the "eAG" fields is actually NGSP on your screen.
-
-                // Save All
-                AstmHigh.LoadResults(result, instrument, null);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error("H9 Parse Error: " + ex.Message);
-            }
-        }
-    }
-}*/
-/*using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using GbService.ASTM;
-using GbService.Communication;
-using GbService.Model.Domain;
-using NLog;
-
-namespace GbService.Other
-{
-    public class LifotronicHandler
-    {
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
-
-        public static void Parse(string msg, Instrument instrument)
-        {
-            try
-            {
-                // 1. Clean Framing
-                string cleanMsg = msg.Replace("\u0002", "").Replace("\u0003", "").Trim();
-
-                // Validate Start
-                if (string.IsNullOrEmpty(cleanMsg) || cleanMsg[0] != 'S') return;
-
-                int cursor = 1; // Skip 'S'
-                cursor += 6;    // Skip Header Info
-
-                // --- 2. Get Sample ID ---
-                // Read ID Length (2 chars)
-                string lenStr = cleanMsg.Substring(cursor, 2);
-                int idLen = 0;
-                int.TryParse(lenStr, out idLen);
-                if (idLen == 0) idLen = 12; // Fallback
-                cursor += 2;
-
-                string sampleId = cleanMsg.Substring(cursor, idLen).Trim();
-                cursor += idLen;
-
-                _logger.Info("H9 Parsed ID: " + sampleId);
-                JihazResult result = new JihazResult(sampleId);
-
-                // --- 3. Skip to Results Section ---
-                // Demographics (23) + Times (12) + Absorbance (36) + Area (42)
-                // Total Skip = 113 chars
-                cursor += 113;
-
-                // Safety check
-                if (cursor >= cleanMsg.Length) return;
-
-                // Get the Results Substring (The part with all the ratios)
-                // Example: 01.200.801.201.806.488.6046.40
-                string resultData = cleanMsg.Substring(cursor);
-
-                // --- 4. Extract Values using Regex ---
-                // This finds numbers like "1.20", "0.80", "88.60" automatically
-                MatchCollection matches = Regex.Matches(resultData, @"\d+\.\d+");
-
-                // We expect at least 7 values (Variants + IFCC)
-                if (matches.Count >= 7)
-                {
-                    // 1. HbA1a (Index 0)
-                    result.Results.Add(new LowResult("HbA1a", matches[0].Value, "%", null, null));
-
-                    // 2. HbA1b (Index 1)
-                    result.Results.Add(new LowResult("HbA1b", matches[1].Value, "%", null, null));
-
-                    // 3. HbF (Index 2)
-                    result.Results.Add(new LowResult("HbF", matches[2].Value, "%", null, null));
-
-                    // 4. LA1c (Index 3)
-                    result.Results.Add(new LowResult("LA1c", matches[3].Value, "%", null, null));
-
-                    // 5. HbA1c (Index 4) - The Main Result
-                    result.Results.Add(new LowResult("HbA1c", matches[4].Value, "%", null, null));
-
-                    // 6. HbA0 (Index 5)
-                    result.Results.Add(new LowResult("HbA0", matches[5].Value, "%", null, null));
-
-                    // 7. IFCC (Index 6)
-                    result.Results.Add(new LowResult("HbA1c_IFCC", matches[6].Value, "mmol/mol", null, null));
-                }
-
-                // 8. eAG (Index 7? - Optional check)
-                if (matches.Count > 7)
-                {
-                    result.Results.Add(new LowResult("eAG", matches[7].Value, "mg/dL", null, null));
-                }
-
-                // Save to Database
-                AstmHigh.LoadResults(result, instrument, null);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error("H9 Parse Error: " + ex.Message);
-            }
-        }
-    }
-}*/
-
+﻿
+/*
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -226,7 +7,9 @@ using System.Text.RegularExpressions;
 using GbService.ASTM;
 using GbService.Communication;
 using GbService.Model.Domain;
+using NHapi.Base;
 using NLog;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace GbService.Other
 {
@@ -369,13 +152,231 @@ public static void Parse(string msg, Instrument instrument)
                     // Fallback: Grab the very last character if cursor calculation drifted
                     string lastChar = cleanMsg.Substring(cleanMsg.Length - 1);
                     result.Results.Add(new LowResult("Error_Code", lastChar, null, null, null));
+                   
+                   
                 }
-                // Save to Database
+           
+
                 AstmHigh.LoadResults(result, instrument, null);
     }
     catch (Exception ex)
     {
         _logger.Error("H9 Parse Error: " + ex.Message);
+            }
+        }
+    }
+}*/
+using System;
+using System.Globalization;
+using System.Text;
+using GbService.ASTM;
+using GbService.Communication;
+using GbService.Model.Domain;
+using NLog;
+
+namespace GbService.Other
+{
+    public class LifotronicHandler
+    {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// Parse one Lifotronic H9 result message.
+        /// </summary>
+        public static void Parse(string msg, Instrument instrument)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(msg))
+                    return;
+
+                // 1) Remove STX (0x02) and ETX (0x03) framing characters
+                string cleanMsg = msg
+                    .Replace("\u0002", string.Empty)
+                    .Replace("\u0003", string.Empty)
+                    .Trim();
+
+                // Message must start with 'S' (sample record)
+                if (string.IsNullOrEmpty(cleanMsg) || cleanMsg[0] != 'S')
+                    return;
+
+                int cursor = 1; // skip 'S'
+
+                // 2) Skip header: Version(2) + ParamCount(2) + Format(2) = 6 chars
+                if (cursor + 6 > cleanMsg.Length)
+                    return;
+                cursor += 6;
+
+                // 3) Sample ID length (2 chars)
+                if (cursor + 2 > cleanMsg.Length)
+                    return;
+
+                string lenStr = cleanMsg.Substring(cursor, 2);
+                int idLen;
+                if (!int.TryParse(lenStr, out idLen) || idLen <= 0)
+                    idLen = 12; // fallback if something is wrong
+
+                cursor += 2;
+
+                // 4) Sample ID (idLen chars)
+                if (cursor + idLen > cleanMsg.Length)
+                    return;
+
+                string sampleId = cleanMsg.Substring(cursor, idLen).Trim();
+                cursor += idLen;
+
+                _logger.Info("H9 ID: " + sampleId);
+
+                var result = new JihazResult(sampleId);
+
+                // 5) Skip demographics:
+                // Rack(4) + Pos(2) + RunNo(4) + Type(1) + DateTime(12) = 23 chars
+                if (cursor + 23 > cleanMsg.Length)
+                    return;
+                cursor += 23;
+
+                // 6) Skip times for 6 variants: 6 * 2 chars
+                if (cursor + 12 > cleanMsg.Length)
+                    return;
+                cursor += 12;
+
+                // 7) Skip absorbance for 6 variants: 6 * 6 chars
+                if (cursor + 36 > cleanMsg.Length)
+                    return;
+                cursor += 36;
+
+                // 8) Skip peak areas for 6 variants: 6 * 6 chars
+                // (firmware sends 6 chars here)
+                if (cursor + 36 > cleanMsg.Length)
+                    return;
+                cursor += 36;
+
+                // 9) Peak area ratios (the % values you actually care about)
+                // Order: HbA1a, HbA1b, HbF, LA1c, HbA1c (4 chars each),
+                // then HbA0 (5 chars)
+                string[] variants = { "HbA1a", "HbA1b", "HbF", "LA1c", "HbA1c" };
+
+                foreach (string v in variants)
+                {
+                    if (cursor + 4 > cleanMsg.Length)
+                        break;
+
+                    string val = cleanMsg.Substring(cursor, 4);
+                    result.Results.Add(new LowResult(v, val.Trim(), "%", null, null));
+                    cursor += 4;
+                }
+
+                // HbA0 (5 chars, e.g. "89.60")
+                if (cursor + 5 <= cleanMsg.Length)
+                {
+                    string valA0 = cleanMsg.Substring(cursor, 5);
+                    result.Results.Add(new LowResult("HbA0", valA0.Trim(), "%", null, null));
+                    cursor += 5;
+                }
+
+                // 10) Main results after the ratios:
+                // HbA1c IFCC (5 chars)
+                if (cursor + 5 <= cleanMsg.Length)
+                {
+                    string ifcc = cleanMsg.Substring(cursor, 5);
+                    result.Results.Add(
+                        new LowResult("HbA1c_IFCC", ifcc.Trim(), "mmol/mol", null, null));
+                    cursor += 5;
+                }
+
+                // eAG mmol/L (4 chars)
+                if (cursor + 4 <= cleanMsg.Length)
+                {
+                    string gluMmol = cleanMsg.Substring(cursor, 4);
+                    result.Results.Add(
+                        new LowResult("eAG_mmol/l", gluMmol.Trim(), "mmol/L", null, null));
+                    cursor += 4;
+                }
+
+                // eAG mg/dL (4 chars)
+                if (cursor + 4 <= cleanMsg.Length)
+                {
+                    string gluMg = cleanMsg.Substring(cursor, 4);
+                    result.Results.Add(
+                        new LowResult("eAG_Mg/dl", gluMg.Trim(), "mg/dL", null, null));
+                    cursor += 4;
+                }
+
+                // 11) Chromatogram curve (graph) ------------------------------
+                // Next 3 chars = number of points
+                if (cursor + 3 <= cleanMsg.Length)
+                {
+                    string pointsCountStr = cleanMsg.Substring(cursor, 3);
+                    cursor += 3;
+
+                    int pointsCount;
+                    if (int.TryParse(pointsCountStr, out pointsCount) && pointsCount > 0)
+                    {
+                        const int pointWidth = 7;   // each point: "0.00300"
+                        var graphData = new StringBuilder();
+
+                        // We store a simple format:
+                        // "Points:\t{count}\tY0\tY1\tY2\t..."
+                        graphData.Append("Points:\t");
+                        graphData.Append(pointsCount);
+
+                        for (int i = 0; i < pointsCount; i++)
+                        {
+                            if (cursor + pointWidth > cleanMsg.Length)
+                                break;
+
+                            string rawVal = cleanMsg.Substring(cursor, pointWidth);
+                            cursor += pointWidth;
+
+                            decimal val;
+                            if (decimal.TryParse(
+                                    rawVal,
+                                    NumberStyles.Float,
+                                    CultureInfo.InvariantCulture,
+                                    out val))
+                            {
+                                // Scale so 0.00300 -> 30 (easier for plotting)
+                                int intVal = (int)(val * 10000m);
+                                graphData.Append('\t');
+                                graphData.Append(intVal);
+                            }
+                            else
+                            {
+                                graphData.Append('\t');
+                                graphData.Append('0');
+                            }
+                        }
+
+                        result.Results.Add(
+                            new LowResult("Graph", graphData.ToString(), null, null, null));
+                    }
+                }
+
+                // 12) Error code (1 char) ------------------------------------
+                string errorCode = null;
+
+                if (cursor + 1 <= cleanMsg.Length)
+                {
+                    errorCode = cleanMsg.Substring(cursor, 1);
+                }
+                else if (cleanMsg.Length > 0)
+                {
+                    // Fallback: last char of the message
+                    errorCode = cleanMsg.Substring(cleanMsg.Length - 1);
+                }
+
+                if (!string.IsNullOrEmpty(errorCode))
+                {
+                    result.Results.Add(
+                        new LowResult("Error_Code", errorCode, null, null, null));
+                }
+
+                // 13) Send everything to the common ASTM handler
+                AstmHigh.LoadResults(result, instrument, null);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("H9 Parse Error: " + ex.Message);
             }
         }
     }

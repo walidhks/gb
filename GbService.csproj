@@ -310,6 +310,8 @@
     <Compile Include="Model\ModelConfigurations\AnalysisRequestConfiguration.cs" />
     <Compile Include="Model\ModelConfigurations\AnalysisTypeConfiguration.cs" />
     <Compile Include="Model\ModelConfigurations\SampleConfiguration.cs" />
+    <Compile Include="Other\CurvePoint.cs" />
+    <Compile Include="Other\H9GraphHelper.cs" />
     <Compile Include="Other\SysmexUC1000Handler.cs" />
     <Compile Include="Other\Lifotronichandler.cs" />
     <Compile Include="Other\AbxMessageHandler.cs" />
