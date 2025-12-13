@@ -25,7 +25,7 @@ namespace GbService.Model.Domain
 		//added medecin string
 		public string MedecinString { get; set; }
 
-        public string MedecinAdressant { get; set; }
+        //public string MedecinAdressant { get; set; }
         public long? PartnerId { get; set; }  // Add this line
 
         // Optional: Add navigation property if you use Entity Framework relationships
